@@ -40,6 +40,12 @@ public class VehicleDTO {
         this.customerDTO = customerDTO;
     }
 
+    public VehicleDTO(VehicleType vehicleType, String registrationNumber, String color) {
+        this.vehicleType = vehicleType;
+        this.registrationNumber = registrationNumber;
+        this.color = color;
+    }
+
     protected VehicleDTO() {
     }
 

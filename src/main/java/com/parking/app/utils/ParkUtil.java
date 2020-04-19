@@ -2,12 +2,9 @@ package com.parking.app.utils;
 
 import com.parking.app.enums.VehicleType;
 import com.parking.app.model.client.Customer;
-import com.parking.app.model.client.ParkRequest;
 import com.parking.app.model.client.Vehicle;
 import com.parking.app.model.jpa.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ParkUtil {
@@ -16,6 +13,17 @@ public class ParkUtil {
         return vehicle.getVehicleType() == VehicleType.CAR ?
                 new CarDTO(vehicle.getRegistrationNumber(), vehicle.getColor(), getCustomer(customer)) :
                 new MotorCycleDTO(vehicle.getRegistrationNumber(), vehicle.getColor(), getCustomer(customer));
+    }
+
+   /* public static VehicleDTO getVehicleDetails(Vehicle vehicle) {
+        return vehicle.getVehicleType() == VehicleType.CAR ?
+                new CarDTO(vehicle.getRegistrationNumber(), vehicle.getColor()) :
+                new MotorCycleDTO(vehicle.getRegistrationNumber(), vehicle.getColor());
+    }*/
+
+
+    public static VehicleDTO getVehicleDetails(Vehicle vehicle) {
+        return new VehicleDTO(vehicle.getVehicleType(), vehicle.getRegistrationNumber(), vehicle.getColor());
     }
 
     public static CustomerDTO getCustomer(Customer customer) {

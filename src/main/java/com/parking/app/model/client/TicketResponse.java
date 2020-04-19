@@ -13,11 +13,14 @@ public class TicketResponse {
 
     private Date endTime;
 
-    public TicketResponse(Integer vehicleId, long amount, Date startTime, Date endTime) {
+    private Long hours;
+
+    public TicketResponse(Integer vehicleId, long amount, Date startTime, Date endTime, Long hours) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.totalAmount = amount;
         this.vehicleId = vehicleId;
+        this.hours = hours;
     }
 
     public Integer getVehicleId() {
@@ -34,6 +37,10 @@ public class TicketResponse {
 
     public Date getEndTime() {
         return endTime;
+    }
+
+    public Long getHours() {
+        return hours;
     }
 
     @Override

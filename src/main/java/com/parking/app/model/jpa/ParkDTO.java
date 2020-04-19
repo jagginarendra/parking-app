@@ -8,6 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "park")
+@NamedNativeQuery(name = "findParkingOfVehicle",query="select park_id,vehicle_id,start_time,end_time,spot_id,parking_lot_id,amount from park  where  vehicle_id = ?",resultClass = ParkDTO.class)
 public class ParkDTO {
 
     @Id
@@ -26,20 +27,21 @@ public class ParkDTO {
     private Date endTime;
 
     @Column(name = "spot_id")
-    private int spotId;
+    private Integer spotId;
 
     @Column(name = "parking_lot_id")
-    private int parkingLotId;
+    private Integer parkingLotId;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vehicle_id")
+    @JoinTable(name = "vehicle")
     private VehicleDTO vehicleDTO;
 
     @Column(name = "amount", insertable = false, updatable = true)
     private Long amount;
 
 
-    public ParkDTO(int spotId, int parkingLotId, VehicleDTO vehicleDTO) {
+    public ParkDTO(Integer spotId, int parkingLotId, VehicleDTO vehicleDTO) {
         this.spotId = spotId;
         this.parkingLotId = parkingLotId;
         this.vehicleDTO = vehicleDTO;
@@ -64,11 +66,11 @@ public class ParkDTO {
         return endTime;
     }
 
-    public int getSpotId() {
+    public Integer getSpotId() {
         return spotId;
     }
 
-    public int getParkingLotId() {
+    public Integer getParkingLotId() {
         return parkingLotId;
     }
 

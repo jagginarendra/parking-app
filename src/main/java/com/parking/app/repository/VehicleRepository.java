@@ -9,5 +9,6 @@ import java.util.Optional;
 @Repository
 public interface VehicleRepository extends JpaRepository<VehicleDTO, Integer> {
 
-    Optional<VehicleDTO> getByRegistrationNumber(String registrationNumber);
+
+    Optional<VehicleDTO> findByRegistrationNumber(String registrationNumber);
 }

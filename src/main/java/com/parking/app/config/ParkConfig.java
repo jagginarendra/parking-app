@@ -1,10 +1,8 @@
 package com.parking.app.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.parking.app.enums.VehicleType;
-import com.parking.app.service.ParkService;
-import com.parking.app.service.RateRuleService;
-import com.parking.app.service.RetrieveParkingSpots;
-import com.parking.app.service.VehicleParkingService;
+import com.parking.app.service.*;
 import com.parking.app.service.admin.ParkingSpotService;
 import com.parking.app.service.admin.impl.ParkingSpotServiceImpl;
 import com.parking.app.service.impl.*;
@@ -54,4 +52,15 @@ public class ParkConfig {
     public RateRuleService rateRuleService() {
         return new RateRuleServiceImpl();
     }
+
+    @Bean
+    public AssignSpotService slotService() {
+        return new AssignAssignSpotServiceImpl();
+    }
+
+    @Bean
+    public ObjectMapper objectMapper(){
+        return new ObjectMapper();
+    }
+
 }

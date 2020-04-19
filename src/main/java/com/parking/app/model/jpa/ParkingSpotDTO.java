@@ -16,6 +16,7 @@ public class ParkingSpotDTO {
     private int floorId;
 
     //1 for bottom 2 for upper
+    //BOTTOM
     private int level;
 
     @Column(name = "status")
@@ -25,7 +26,7 @@ public class ParkingSpotDTO {
     private int occupancyCount;
 
     @Column(name = "company_id")
-    private int companyId;
+    private Integer companyId;
 
 
     public ParkingSpotDTO(int floorId, int level, String occupancyStatus, int occupancyCount, int companyId) {
@@ -39,7 +40,7 @@ public class ParkingSpotDTO {
     protected ParkingSpotDTO() {
     }
 
-    public int getSpotId() {
+    public Integer getSpotId() {
         return spotId;
     }
 
