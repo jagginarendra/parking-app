@@ -1,12 +1,13 @@
-package com.parking.app.service.impl;
+package com.parking.app.dao;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.parking.app.exception.NoMatchingSpotFound;
 import com.parking.app.exception.NoSpotAvilableException;
 import com.parking.app.exception.UnrecognizedCustomerTypeException;
 import com.parking.app.model.client.ParkRequest;
 import com.parking.app.model.jpa.ParkingSpotDTO;
 import com.parking.app.repository.SpotRepository;
-import com.parking.app.service.RetrieveParkingSpots;
+import com.parking.app.utils.ParkUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -15,10 +16,17 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class RetrieveParkingSpotsImpl implements RetrieveParkingSpots {
+public class RetrieveParkingSpotsDAOImpl implements RetrieveParkingSpotsDAO {
 
     @Autowired
     SpotRepository spotRepository;
+
+    @Autowired
+    ObjectMapper objectMapper;
+
+
+    @Value("${vehicle.supported.occupany}")
+    String occupanyConfig;
 
     @Value("${minimum.spots.for.royal}")
     Integer MIN_SPOTS_REUIRED_ROYAL;
@@ -27,7 +35,8 @@ public class RetrieveParkingSpotsImpl implements RetrieveParkingSpots {
         Return multiple spots,As royals need multiple spot to occupy
      */
     @Override
-    public Optional<List<ParkingSpotDTO>> getMatchingParkingSpot(ParkRequest parkRequest, List<String> occupancyStatus) {
+    public Optional<List<ParkingSpotDTO>> getMatchingParkingSpot(ParkRequest parkRequest) {
+        List<String> occupancyStatus = ParkUtil.getOccupancyStatus(parkRequest, occupanyConfig,objectMapper);
         List<ParkingSpotDTO> currentFreeSpots = spotRepository.findByParkingLotIdHavingOccupancyStatus(parkRequest.getParkingLotID(), occupancyStatus);
         if (currentFreeSpots.isEmpty()) {
             Optional.empty();
@@ -48,21 +57,21 @@ public class RetrieveParkingSpotsImpl implements RetrieveParkingSpots {
     private Optional<List<ParkingSpotDTO>> getSpotForSeniorCitizen(ParkRequest parkRequest, List<String> occupancyStatus) {
         //sorted by floor and level
         List<ParkingSpotDTO> floorWiseSortedSpots = spotRepository.findByCompanyIdHavingStatusInNaturalFloorOrderAndLevelOrder(parkRequest.getParkingLotID(), occupancyStatus);
-        if(floorWiseSortedSpots.isEmpty()){
+        if (floorWiseSortedSpots.isEmpty()) {
             throw new NoMatchingSpotFound("No matching spot found");
         }
-        return Optional.of(floorWiseSortedSpots.subList(0,1));
+        return Optional.of(floorWiseSortedSpots.subList(0, 1));
     }
 
     private Optional<List<ParkingSpotDTO>> getSpotForRoyal(ParkRequest parkRequest, List<String> occupancyStatus) {
 
         List<ParkingSpotDTO> floorWiseSortedSpots = spotRepository.findByCompanyIdHavingStatusInNaturalFloorOrder(parkRequest.getParkingLotID(), occupancyStatus);
-        if(floorWiseSortedSpots.isEmpty()){
+        if (floorWiseSortedSpots.isEmpty()) {
             throw new NoMatchingSpotFound("No matching spot found");
         }
         Map<Integer, List<ParkingSpotDTO>> floorWiseSpotsMap = floorWiseSortedSpots.parallelStream().collect(Collectors.groupingBy(e -> e.getFloorId()));
         Optional<List<ParkingSpotDTO>> matchedSpots = floorWiseSpotsMap.entrySet().stream().filter(e -> e.getValue().size() > MIN_SPOTS_REUIRED_ROYAL).map(e -> e.getValue()).findFirst();
-        if(!matchedSpots.isPresent() || matchedSpots.get().isEmpty() || matchedSpots.get().size() < MIN_SPOTS_REUIRED_ROYAL){
+        if (!matchedSpots.isPresent() || matchedSpots.get().isEmpty() || matchedSpots.get().size() < MIN_SPOTS_REUIRED_ROYAL) {
             throw new NoSpotAvilableException("No Spot Available for Royal customer");
         }
         return matchedSpots;
@@ -70,10 +79,10 @@ public class RetrieveParkingSpotsImpl implements RetrieveParkingSpots {
 
     private Optional<List<ParkingSpotDTO>> getGeneralSlots(ParkRequest parkRequest, List<String> occupancyStatus) {
         List<ParkingSpotDTO> floorWiseSortedSpots = spotRepository.findByCompanyIdHavingStatusInReverseFloorOrder(parkRequest.getParkingLotID(), occupancyStatus);
-        if(floorWiseSortedSpots.isEmpty()){
+        if (floorWiseSortedSpots.isEmpty()) {
             throw new NoMatchingSpotFound("No matching spot found");
         }
-        return Optional.of(floorWiseSortedSpots.subList(0,1));
+        return Optional.of(floorWiseSortedSpots.subList(0, 1));
     }
 
 

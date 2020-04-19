@@ -1,6 +1,6 @@
 package com.parking.app.model.jpa;
 
-public class TicketDTO {
+public class Recipt {
 
 
     private Long amount;
@@ -11,15 +11,15 @@ public class TicketDTO {
 
     private String endDate;
 
-    public TicketDTO() {
+    public Recipt() {
 
     }
 
-    private TicketDTO(TicketDTOBuilder ticketDTOBuilder) {
-        this.amount = ticketDTOBuilder.amount;
-        this.durationInHours = ticketDTOBuilder.durationInHours;
-        this.startDate = ticketDTOBuilder.startDate;
-        this.endDate = ticketDTOBuilder.endDate;
+    private Recipt(ReciptBuilder reciptBuilder) {
+        this.amount = reciptBuilder.amount;
+        this.durationInHours = reciptBuilder.durationInHours;
+        this.startDate = reciptBuilder.startDate;
+        this.endDate = reciptBuilder.endDate;
     }
 
     public Long getAmount() {
@@ -55,42 +55,42 @@ public class TicketDTO {
     }
 
 
-    public static class TicketDTOBuilder {
+    public static class ReciptBuilder {
 
         private Long amount;
         private Long durationInHours;
         private String startDate;
         private String endDate;
 
-        public TicketDTOBuilder() {
+        public ReciptBuilder() {
 
         }
 
-        public TicketDTOBuilder setAmount(Long amount) {
+        public ReciptBuilder setAmount(Long amount) {
             this.amount = amount;
             return this;
         }
 
 
-        public TicketDTOBuilder setDuration(Long duration) {
+        public ReciptBuilder setDuration(Long duration) {
             this.durationInHours = duration;
             return this;
         }
 
 
-        public TicketDTOBuilder setStartDate(String startDate) {
+        public ReciptBuilder setStartDate(String startDate) {
             this.startDate = startDate;
             return this;
         }
 
-        public TicketDTOBuilder setEndDate(String endDate) {
+        public ReciptBuilder setEndDate(String endDate) {
             this.endDate = endDate;
             return this;
         }
 
 
-        public TicketDTO build() {
-            return new TicketDTO(this);
+        public Recipt build() {
+            return new Recipt(this);
         }
 
 

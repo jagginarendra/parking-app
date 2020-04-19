@@ -1,17 +1,20 @@
 package com.parking.app.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.parking.app.enums.VehicleType;
-import com.parking.app.service.*;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.parking.app.dao.*;
+import com.parking.app.service.ParkService;
+import com.parking.app.service.RateRuleService;
 import com.parking.app.service.admin.ParkingSpotService;
 import com.parking.app.service.admin.impl.ParkingSpotServiceImpl;
-import com.parking.app.service.impl.*;
+import com.parking.app.service.impl.ParkServiceImpl;
+import com.parking.app.service.impl.RateRuleServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.HashMap;
-import java.util.Map;
-
+/*
+    Defines All configs at one place for ease of managing
+ */
 @Configuration
 public class ParkConfig {
 
@@ -26,26 +29,8 @@ public class ParkConfig {
     }
 
     @Bean
-    public VehicleParkingService carParkService() {
-        return new CarParkServiceImpl();
-    }
-
-    @Bean
-    public VehicleParkingService motorCycleParkService() {
-        return new MotorCycleParkServiceImpl();
-    }
-
-    @Bean
-    public Map<VehicleType, VehicleParkingService> parkServiceHashMap(VehicleParkingService motorCycleParkService, VehicleParkingService carParkService) {
-        Map<VehicleType, VehicleParkingService> vehicleServiceMap = new HashMap<>();
-        vehicleServiceMap.put(VehicleType.CAR, carParkService);
-        vehicleServiceMap.put(VehicleType.MOTORCYCLE, motorCycleParkService);
-        return vehicleServiceMap;
-    }
-
-    @Bean
-    public RetrieveParkingSpots retrieveParkingSpots() {
-        return new RetrieveParkingSpotsImpl();
+    public RetrieveParkingSpotsDAO retrieveParkingSpots() {
+        return new RetrieveParkingSpotsDAOImpl();
     }
 
     @Bean
@@ -54,13 +39,28 @@ public class ParkConfig {
     }
 
     @Bean
-    public AssignSpotService slotService() {
-        return new AssignAssignSpotServiceImpl();
+    public AssignSpotDAO slotService() {
+        return new AssignSpotDAOImpl();
     }
 
     @Bean
-    public ObjectMapper objectMapper(){
-        return new ObjectMapper();
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper().registerModule(new Jdk8Module());
+    }
+
+    @Bean
+    public AvailabilityDAO availabilityDAO() {
+        return new AvailabilityDAOImpl();
+    }
+
+    @Bean
+    public ReleaseParkingDAO releaseParkingDAO() {
+        return new ReleaseParkingDAOImpl();
+    }
+
+    @Bean
+    public VehicleDAO vehicleDAO() {
+        return new VehicleDAOImpl();
     }
 
 }

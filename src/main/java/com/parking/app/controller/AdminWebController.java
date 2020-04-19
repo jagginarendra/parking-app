@@ -5,6 +5,9 @@ import com.parking.app.service.admin.ParkingSpotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/*
+    For Admin functionality, In progress. Add New floors,spots,companyId/parkingIds
+ */
 @RestController
 @RequestMapping("/parkingservice/admin")
 public class AdminWebController extends AbstractController {

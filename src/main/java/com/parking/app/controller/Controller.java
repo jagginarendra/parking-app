@@ -1,16 +1,13 @@
 package com.parking.app.controller;
 
 
-import com.parking.app.model.client.TicketRequest;
-import com.parking.app.model.client.TicketResponse;
-import com.parking.app.model.client.ParkRequest;
-import com.parking.app.model.client.ParkResponse;
+import com.parking.app.model.client.*;
 
 public interface Controller {
 
-    ParkResponse park(ParkRequest request);
+    Response<ParkResponse> park(ParkRequest request);
 
-    TicketResponse unpark(TicketRequest request);
+    Response<TicketResponse> unpark(TicketRequest request);
 
 
 }

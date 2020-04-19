@@ -34,7 +34,7 @@ public class ParkDTO {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vehicle_id")
-    @JoinTable(name = "vehicle")
+    //@JoinTable(name = "vehicle")
     private VehicleDTO vehicleDTO;
 
     @Column(name = "amount", insertable = false, updatable = true)

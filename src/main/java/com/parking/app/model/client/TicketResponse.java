@@ -1,7 +1,10 @@
 package com.parking.app.model.client;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class TicketResponse {
 
 
@@ -9,17 +12,22 @@ public class TicketResponse {
 
     private long totalAmount;
 
-    private Date startTime;
+    private String startTime;
 
-    private Date endTime;
+    private String endTime;
 
     private Long hours;
 
-    public TicketResponse(Integer vehicleId, long amount, Date startTime, Date endTime, Long hours) {
+    @JsonCreator
+    public TicketResponse(@JsonProperty("vehicle_Id") Integer vehicleId,
+                          @JsonProperty("total_Amount") long totalAmount,
+                          @JsonProperty("start_time") String startTime,
+                          @JsonProperty("end_time") String endTime,
+                          @JsonProperty("hours") Long hours) {
+        this.vehicleId = vehicleId;
+        this.totalAmount = totalAmount;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.totalAmount = amount;
-        this.vehicleId = vehicleId;
         this.hours = hours;
     }
 
@@ -27,20 +35,40 @@ public class TicketResponse {
         return vehicleId;
     }
 
+    public void setVehicleId(Integer vehicleId) {
+        this.vehicleId = vehicleId;
+    }
+
     public long getTotalAmount() {
         return totalAmount;
     }
 
-    public Date getStartTime() {
+    public void setTotalAmount(long totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public String getStartTime() {
         return startTime;
     }
 
-    public Date getEndTime() {
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
         return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
     public Long getHours() {
         return hours;
+    }
+
+    public void setHours(Long hours) {
+        this.hours = hours;
     }
 
     @Override
@@ -48,8 +76,9 @@ public class TicketResponse {
         return "TicketResponse{" +
                 "vehicleId=" + vehicleId +
                 ", totalAmount=" + totalAmount +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", hours=" + hours +
                 '}';
     }
 }

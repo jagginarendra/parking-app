@@ -1,10 +1,10 @@
 package com.parking.app.service;
 
 import com.parking.app.model.jpa.ParkDTO;
-import com.parking.app.model.jpa.TicketDTO;
+import com.parking.app.model.jpa.Recipt;
 
 public interface RateRuleService {
 
-    TicketDTO getRateDetails(ParkDTO parkingSpotDTO);
+    Recipt getRateDetails(ParkDTO parkingSpotDTO);
 
 }

@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    Adds New Parking Spots with Initial State as Empty
+ */
 public class ParkingSpotServiceImpl implements ParkingSpotService {
 
     @Autowired
@@ -21,6 +24,7 @@ public class ParkingSpotServiceImpl implements ParkingSpotService {
     @Autowired
     FloorRepository floorRepository;
 
+    //Warm up for demo
     @Override
     public boolean addNewSpots(AddNewSpotRequest newSpotRequest) {
 

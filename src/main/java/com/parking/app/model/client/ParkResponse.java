@@ -1,18 +1,24 @@
 package com.parking.app.model.client;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ParkResponse {
 
     private Integer spotId;
 
-    private Date startTime;
+    private String startTime;
 
     private Integer vehicleId;
 
-
-    public ParkResponse(Integer spotId, Date startTime, Integer vehicleId) {
+    @JsonCreator
+    public ParkResponse(@JsonProperty("parking_spot_Id")  Integer spotId,
+                        @JsonProperty("start_time") String startTime,
+                        @JsonProperty("vehicle_Id") Integer vehicleId) {
         this.spotId = spotId;
         this.startTime = startTime;
         this.vehicleId = vehicleId;
@@ -22,7 +28,7 @@ public class ParkResponse {
         return spotId;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
