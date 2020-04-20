@@ -9,18 +9,19 @@ import org.springframework.web.bind.annotation.*;
     For Admin functionality, In progress. Add New floors,spots,companyId/parkingIds
  */
 @RestController
+@RequestMapping("/parkingservice/admin")
 public class AdminWebController extends AbstractController {
 
 
     @Autowired
     AdminParkingSpotService adminParkingSpotService;
 
-    @GetMapping("/admin/addfloors")
+    @GetMapping("/addfloors")
     public boolean addFloors(){
         return false;
     }
 
-    @PostMapping("/admin/addspots")
+    @PostMapping("/addspots")
     public boolean addParkingSpots(@RequestBody AddNewSpotRequest addNewSpotRequest){
 
         return adminParkingSpotService.addNewSpots(addNewSpotRequest);
