@@ -1,7 +1,7 @@
 package com.parking.app.controller;
 
 import com.parking.app.model.client.AddNewSpotRequest;
-import com.parking.app.service.admin.ParkingSpotService;
+import com.parking.app.service.admin.AdminParkingSpotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +14,7 @@ public class AdminWebController extends AbstractController {
 
 
     @Autowired
-    ParkingSpotService parkingSpotService;
+    AdminParkingSpotService adminParkingSpotService;
 
     @GetMapping("/addfloors")
     public boolean addFloors(){
@@ -24,6 +24,6 @@ public class AdminWebController extends AbstractController {
     @PostMapping("/addspots")
     public boolean addParkingSpots(@RequestBody AddNewSpotRequest addNewSpotRequest){
 
-        return parkingSpotService.addNewSpots(addNewSpotRequest);
+        return adminParkingSpotService.addNewSpots(addNewSpotRequest);
     }
 }

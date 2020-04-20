@@ -7,16 +7,16 @@ import com.parking.app.model.jpa.FloorDTO;
 import com.parking.app.model.jpa.ParkingSpotDTO;
 import com.parking.app.repository.FloorRepository;
 import com.parking.app.repository.SpotRepository;
-import com.parking.app.service.admin.ParkingSpotService;
+import com.parking.app.service.admin.AdminParkingSpotService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /*
-    Adds New Parking Spots with Initial State as Empty
+    Adds New Parking Statpots with Initial State as Empty
  */
-public class ParkingSpotServiceImpl implements ParkingSpotService {
+public class AdminAdminParkingSpotServiceImpl implements AdminParkingSpotService {
 
     @Autowired
     SpotRepository spotRepository;
