@@ -1,10 +1,10 @@
 
-**Multi-Level Parking App**
+# Multi-Level Parking App
 
-##AWS hosted URL - 3.136.11.80:9080
+## AWS hosted URL - 3.136.11.80:9080
 
 
-##Mysql Sql scripts-
+## Mysql Sql scripts-
 
 create database parking_system;
 create table floors(floor_id int4 primary key auto_increment, description VARCHAR(55));
@@ -15,7 +15,7 @@ create table vehicle (vehicle_id int primary key auto_increment, registration_nu
 create table park (park_id int primary key auto_increment, vehicle_id int, start_time datetime , end_time datetime, spot_id int ,parking_lot_id int,amount int);
 
 
-##CI with Jenkins Pipeline With docker
+## CI with Jenkins Pipeline With docker
 
 build pipeline-url --> http://3.19.66.87:8080/job/Deploy_Parking_App/
 Few Words about pipeline
@@ -24,7 +24,7 @@ Few Words about pipeline
 - Generate docker container parking-app-image and starts on 9080
 
 
-##Sample Parking Entry Requests 
+## Sample Parking Entry Requests 
 {
     "customer": {
         "first_name": "Ravi",
@@ -53,13 +53,13 @@ Few Words about pipeline
     "error": null
 }
 
-##Sample Parking Leaving Request
+## Sample Parking Leaving Request
 
 {
 	"registration_number":"JK 11 12222"
 }
 
-##Sample Parking Leaving Response 
+## Sample Parking Leaving Response 
 {
     "success": true,
     "body": {
@@ -72,6 +72,10 @@ Few Words about pipeline
     "error": null
 }
 
+## Other Modules
+### Spring Boot Adming app to monitor health
+### Eureka for Discovery
+### Zuul Proxy
 
 
 
