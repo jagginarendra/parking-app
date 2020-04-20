@@ -13,7 +13,6 @@ import javax.validation.Valid;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/parkingservice")
 public class ParkingWebController extends AbstractController {
 
     @Autowired
