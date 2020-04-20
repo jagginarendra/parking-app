@@ -1,8 +1,6 @@
 package com.parking.app.model.client;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
@@ -15,10 +13,9 @@ public class ParkResponse {
 
     private Integer vehicleId;
 
-    @JsonCreator
-    public ParkResponse(@JsonProperty("parking_spot_Id")  Integer spotId,
-                        @JsonProperty("start_time") String startTime,
-                        @JsonProperty("vehicle_Id") Integer vehicleId) {
+    public ParkResponse(Integer spotId,
+                        String startTime,
+                        Integer vehicleId) {
         this.spotId = spotId;
         this.startTime = startTime;
         this.vehicleId = vehicleId;

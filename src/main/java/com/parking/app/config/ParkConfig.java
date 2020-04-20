@@ -16,6 +16,8 @@ import com.parking.app.service.impl.VehicleServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 /*
     Defines All configs at one place for ease of managing
  */
@@ -24,7 +26,7 @@ public class ParkConfig {
 
     @Bean
     public ParkService parkService() {
-        return new ParkServiceImpl();
+        return new ParkServiceImpl(new ReentrantLock(true));
     }
 
     @Bean

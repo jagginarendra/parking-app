@@ -26,14 +26,17 @@ public class ParkServiceImpl implements ParkService {
 
     private static final Logger logger = LoggerFactory.getLogger(ParkServiceImpl.class);
 
-
     @Autowired
     SpotService spotService;
 
     @Autowired
     VehicleService vehicleService;
 
-    ReentrantLock reentrantLock = new ReentrantLock();
+    ReentrantLock reentrantLock;
+
+    public ParkServiceImpl(ReentrantLock reentrantLock) {
+        this.reentrantLock = reentrantLock;
+    }
 
     /*
         Takes ParkRequest, parking_Lot_Id is per parking company
@@ -45,17 +48,18 @@ public class ParkServiceImpl implements ParkService {
 
         List<ParkingSpotDTO> freeParkingSpotDTOS = spotService.checkAvailability(parkRequest);
         if (freeParkingSpotDTOS.isEmpty()) {
-            logger.error("No Spot available for {}",parkRequest.toString());
+            logger.error("No Spot available for {}", parkRequest.toString());
             throw new NoSpotAvilableException("No Parking Spot Available for={}" + parkRequest.getParkingLotID());
         }
         try {
             reentrantLock.lock();
             Optional<List<ParkingSpotDTO>> matchingParkingSpot = spotService.getMatchingParkingSpot(parkRequest);
             if (!matchingParkingSpot.isPresent() || matchingParkingSpot.get().isEmpty()) {
-                logger.error("No Spot available for {}",parkRequest.toString());
+                logger.error("No Spot available for {}", parkRequest.toString());
                 throw new NoSpotAvilableException("No Matching Parking Spot Available for=" + parkRequest.getParkingLotID());
             }
-            return spotService.assignSlot(matchingParkingSpot.get(), parkRequest);
+            List<ParkingSpotDTO> parkings = matchingParkingSpot.get();
+            return spotService.assignSlot(parkings, parkRequest);
         } finally {
             reentrantLock.unlock();
         }
@@ -71,7 +75,7 @@ public class ParkServiceImpl implements ParkService {
         Optional<VehicleDTO> vehicle = vehicleService.getVehicleDetails(ticketRequest);
         List<ParkDTO> parkingList = vehicleService.getAllParkingsHolded(vehicle.get().getVehicleId());
         if (Objects.isNull(parkingList) || parkingList.isEmpty()) {
-            logger.error("No Matching Parking sport found for {}",ticketRequest.getRegistrationNumber());
+            logger.error("No Matching Parking sport found for {}", ticketRequest.getRegistrationNumber());
             throw new NoMatchingParkingFoundException("No Parking found with registration=" + ticketRequest.getRegistrationNumber());
         }
 
